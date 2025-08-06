@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}">Dashboard</title>
+
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" th:href="@{/css/adminlte.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- JS AdminLTE -->
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/adminlte.min.js}" defer></script>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- Navbar superior -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a th:href="@{/lista}" class="nav-link">Inicio</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn btn-outline-danger btn-sm" type="submit">Cerrar sesión</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Sidebar lateral -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="#" class="brand-link text-center">
+            <span class="brand-text font-weight-light">Gestión Empleados</span>
+        </a>
+
+        <div class="sidebar">
+            <nav class="mt-3">
+                <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
+
+                    <!-- Lista de empleados -->
+                    <li class="nav-item">
+                        <a th:href="@{/lista}" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Lista de empleados</p>
+                        </a>
+                    </li>
+
+                    <!-- Registrar empleado (solo ADMIN) -->
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/form}" class="nav-link">
+                            <i class="nav-icon fas fa-user-plus"></i>
+                            <p>Registrar empleado</p>
+                        </a>
+                    </li>
+
+                    <!-- Exportar PDF (solo ADMIN) -->
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/exportarPDF}" class="nav-link">
+                            <i class="nav-icon fas fa-file-pdf"></i>
+                            <p>Exportar PDF</p>
+                        </a>
+                    </li>
+
+                    <!-- Exportar Excel (solo ADMIN) -->
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/exportarExcel}" class="nav-link">
+                            <i class="nav-icon fas fa-file-excel"></i>
+                            <p>Exportar Excel</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <div class="content-wrapper pt-3">
+        <section class="content px-3">
+            <div layout:fragment="content"></div>
+        </section>
+    </div>
+
+    <!-- Footer opcional -->
+    <footer class="main-footer text-center">
+        <strong>&copy; 2025 Sistema de Gestión de Empleados</strong>
+    </footer>
+</div>
+</body>
+</html>
+
+

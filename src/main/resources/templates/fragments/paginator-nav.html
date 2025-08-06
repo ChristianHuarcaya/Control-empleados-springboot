@@ -1,0 +1,55 @@
+<!-- fragments/paginator-nav.html -->
+<div th:fragment="paginador(url, page)">
+
+    <nav th:if="${page.totalPaginas > 1}" aria-label="Paginación">
+        <ul class="pagination justify-content-center">
+
+            <!-- Primera página -->
+            <li class="page-item" th:classappend="${page.first} ? 'disabled'">
+                <a class="page-link" th:href="@{${url}(page=0)}" tabindex="-1" aria-disabled="${page.first}">Primera</a>
+            </li>
+
+            <!-- Página anterior -->
+            <li class="page-item" th:classappend="${!page.hasPrevious()} ? 'disabled'">
+                <a class="page-link" 
+                   th:href="@{${url}(page=${page.paginaActual > 0 ? page.paginaActual - 1 : 0})}" 
+                   aria-label="Anterior" tabindex="-1" 
+                   aria-disabled="${!page.hasPrevious()}">
+                    &laquo;
+                </a>
+            </li>
+
+            <!-- Números de página -->
+            <li th:each="item : ${page.paginas}" 
+                class="page-item" 
+                th:classappend="${item.actual} ? 'active'">
+                <a class="page-link" 
+                   th:href="@{${url}(page=${item.numero - 1})}" 
+                   th:text="${item.numero}"></a>
+            </li>
+
+            <!-- Página siguiente -->
+            <li class="page-item" th:classappend="${!page.hasNext()} ? 'disabled'">
+                <a class="page-link" 
+                   th:href="@{${url}(page=${page.paginaActual < page.totalPaginas - 1 ? page.paginaActual + 1 : page.paginaActual})}" 
+                   aria-label="Siguiente" 
+                   aria-disabled="${!page.hasNext()}">
+                    &raquo;
+                </a>
+            </li>
+
+            <!-- Última página -->
+            <li class="page-item" th:classappend="${page.last} ? 'disabled'">
+                <a class="page-link" 
+                   th:href="@{${url}(page=${page.totalPaginas - 1})}">Última</a>
+            </li>
+
+        </ul>
+    </nav>
+
+</div>
+
+
+
+
+
